@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppPetID - Red Social Inteligente para Mascotas</title>
+    <meta name="description" content="La primera red social inteligente para mascotas y sus dueños. Conecta, protege y cuida a tu mascota con tecnología avanzada.">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="AppPetID - Red Social Inteligente para Mascotas">
+    <meta property="og:description" content="Conecta, protege y cuida a tu mascota con la red social más avanzada.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tu-usuario.github.io/apppetid">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiM0QTdBQTciLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPgo8cGF0aCBkPSJtMTIgMTQgMi4xLTIuMWMuNCAtLjQgLjQgLTEgMCAtMS40cy0xIC0uNCAtMS40IDBMMTEgMTIuMlY5YzAgLS42IC0uNCAtMSAtMSAtMXMtMSAuNCAtMSAxdjMuMkw3LjMgMTAuNWMtLjQgLS40IC0xIC0uNCAtMS40IDBzLS40IDEgMCAxLjRMMTIgMTR6Ii8+Cjwvc3ZnPgo8L3N2Zz4K">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #4A7AA7;
+            --secondary-color: #6B9BD1;
+            --accent-color: #8BB5E8;
+            --text-dark: #2D3748;
+            --text-light: #718096;
+            --background: #F8F9FA;
+            --white: #FFFFFF;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--background);
+            overflow-x: hidden;
+        }
+
+        /* Navegación */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 50%, var(--accent-color) 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="white" opacity="0.1"/><circle cx="80" cy="40" r="0.5" fill="white" opacity="0.1"/><circle cx="40" cy="70" r="1.5" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .hero-content .description {
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            opacity: 0.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary-color);
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-secondary {
+            border: 2px solid white;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .phone-mockup {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .phone {
+            width: 280px;
+            height: 560px;
+            background: #1a1a1a;
+            border-radius: 40px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            transform: rotate(5deg);
+            transition: transform 0.3s ease;
+        }
+
+        .phone:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, var(--background) 0%, white 100%);
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-interface {
+            padding: 20px;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 400"><rect width="200" height="80" fill="%234A7AA7" rx="10"/><circle cx="50" cy="40" r="20" fill="white" opacity="0.9"/><rect x="80" y="30" width="100" height="8" fill="white" opacity="0.8" rx="4"/><rect x="80" y="45" width="60" height="6" fill="white" opacity="0.6" rx="3"/><rect x="20" y="120" width="160" height="60" fill="white" rx="15" fill-opacity="0.9"/><rect x="20" y="200" width="160" height="60" fill="white" rx="15" fill-opacity="0.9"/><rect x="20" y="280" width="160" height="60" fill="white" rx="15" fill-opacity="0.9"/></svg>') no-repeat center;
+            background-size: cover;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 0;
+            background: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(74, 122, 167, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Download Section */
+        .download-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+        }
+
+        .download-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .download-content p {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .download-options {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .download-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            min-width: 250px;
+            transition: all 0.3s ease;
+        }
+
+        .download-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .platform-icon {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        .download-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .download-card p {
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .download-link {
+            background: white;
+            color: var(--primary-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .download-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .phone {
+                width: 240px;
+                height: 480px;
+            }
+
+            .cta-buttons {
+                justify-content: center;
+            }
+
+            .download-options {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Loading state for download button */
+        .download-link.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .download-link.loading::after {
+            content: '';
+            width: 16px;
+            height: 16px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 0.5rem;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegación -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">🐾</div>
+                AppPetID
+            </a>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#funciones">Funciones</a></li>
+                <li><a href="#descargar">Descargar</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <a href="#descargar" class="download-btn">Descargar App</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="hero-container">
+            <div class="hero-content fade-in">
+                <h1>La Red Social de tus Mascotas</h1>
+                <p class="subtitle">Conecta, protege y cuida a tu mejor amigo</p>
+                <p class="description">
+                    AppPetID es la primera red social inteligente diseñada específicamente para mascotas y sus dueños. 
+                    Utiliza tecnología avanzada para mantener a tu mascota segura y conectada.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#descargar" class="btn-primary">
+                        📱 Descargar Gratis
+                    </a>
+                    <a href="#funciones" class="btn-secondary">Ver Funciones</a>
+                </div>
+            </div>
+            <div class="phone-mockup fade-in">
+                <div class="phone">
+                    <div class="phone-screen">
+                        <div class="app-interface"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="funciones">
+        <div class="container">
+            <div class="section-header">
+                <h2>Funciones Increíbles</h2>
+                <p>Descubre todo lo que AppPetID puede hacer por ti y tu mascota</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🏠</div>
+                    <h3>Perfil Completo</h3>
+                    <p>Crea perfiles detallados con fotos, información médica, y datos importantes de tus mascotas.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">📱</div>
+                    <h3>Código QR Único</h3>
+                    <p>Cada mascota tiene su código QR personal para identificación rápida y segura.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🆘</div>
+                    <h3>Alertas de Mascotas Perdidas</h3>
+                    <p>Sistema inteligente de alertas que notifica a la comunidad cuando una mascota se pierde.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🏥</div>
+                    <h3>Historial Médico</h3>
+                    <p>Mantén un registro completo de vacunas, consultas veterinarias y tratamientos.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">📍</div>
+                    <h3>Localización GPS</h3>
+                    <p>Rastrea la ubicación de mascotas perdidas y recibe notificaciones de avistamientos.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">👥</div>
+                    <h3>Comunidad Activa</h3>
+                    <p>Conecta con otros dueños de mascotas en tu área y comparte experiencias.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="download-section" id="descargar">
+        <div class="container">
+            <div class="download-content">
+                <h2>Descarga AppPetID</h2>
+                <p>Únete a miles de dueños de mascotas que ya protegen a sus compañeros peludos</p>
+                <div class="download-options">
+                    <div class="download-card">
+                        <div class="platform-icon">🤖</div>
+                        <h3>Android</h3>
+                        <p>Compatible con Android 7.0 o superior</p>
+                        <a href="#" class="download-link" id="downloadAndroid" onclick="downloadAPK()">
+                            ⬇️ Descargar APK
+                        </a>
+                    </div>
+                    <div class="download-card">
+                        <div class="platform-icon">🍎</div>
+                        <h3>iOS</h3>
+                        <p>Próximamente en App Store</p>
+                        <a href="#" class="download-link" style="opacity: 0.5; pointer-events: none;">
+                            ⏳ Próximamente
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contacto">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AppPetID</h3>
+                    <p>La red social inteligente para mascotas y sus dueños. Protegemos lo que más amas.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Enlaces</h3>
+                    <p><a href="#inicio">Inicio</a></p>
+                    <p><a href="#funciones">Funciones</a></p>
+                    <p><a href="#descargar">Descargar</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Soporte</h3>
+                    <p><a href="mailto:support@apppetid.com">support@apppetid.com</a></p>
+                    <p><a href="#">Centro de Ayuda</a></p>
+                    <p><a href="#">Términos de Servicio</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Síguenos</h3>
+                    <p><a href="#">Facebook</a></p>
+                    <p><a href="#">Instagram</a></p>
+                    <p><a href="#">Twitter</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AppPetID. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements that should fade in
+        document.querySelectorAll('.feature-card, .phone-mockup, .hero-content').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Download APK function
+        function downloadAPK() {
+            const button = document.getElementById('downloadAndroid');
+            button.classList.add('loading');
+            button.innerHTML = '⏳ Preparando descarga...';
+
+            // Simular preparación de descarga
+            setTimeout(() => {
+                // Aquí reemplaza 'ruta-a-tu-apk.apk' con la ruta real de tu archivo APK
+                const apkUrl = './app-release.apk'; // Cambia esto por tu archivo APK
+                
+                // Crear elemento de descarga temporal
+                const link = document.createElement('a');
+                link.href = apkUrl;
+                link.download = 'AppPetID.apk';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                // Restaurar botón
+                button.classList.remove('loading');
+                button.innerHTML = '⬇️ Descargar APK';
+
+                // Mostrar mensaje de éxito
+                showDownloadMessage();
+            }, 2000);
+        }
+
+        // Mostrar mensaje de descarga
+        function showDownloadMessage() {
+            const message = document.createElement('div');
+            message.innerHTML = `
+                <div style="
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+                    color: white;
+                    padding: 2rem;
+                    border-radius: 20px;
+                    text-align: center;
+                    box-shadow: var(--shadow-hover);
+                    z-index: 10000;
+                    max-width: 400px;
+                    width: 90%;
+                ">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎉</div>
+                    <h3 style="margin-bottom: 1rem;">¡Descarga Iniciada!</h3>
+                    <p style="margin-bottom: 1.5rem; opacity: 0.9;">
+                        AppPetID se está descargando. Habilita la instalación de fuentes desconocidas en tu dispositivo Android.
+                    </p>
+                    <button onclick="this.parentElement.parentElement.remove()" style="
+                        background: white;
+                        color: var(--primary-color);
+                        border: none;
+                        padding: 0.75rem 1.5rem;
+                        border-radius: 25px;
+                        font-weight: 600;
+                        cursor: pointer;
+                    ">Entendido</button>
+                </div>
+            `;
+            document.body.appendChild(message);
+
+            // Auto-remove after 10 seconds
+            setTimeout(() => {
+                if (message.parentElement) {
+                    message.remove();
+                }
+            }, 10000);
+        }
+
+        // Analytics simulation (replace with real analytics)
+        function trackDownload() {
+            console.log('APK download tracked');
+            // Aquí puedes agregar Google Analytics o similar
+            // gtag('event', 'download', { 'app_name': 'AppPetID' });
+        }
+
+        // Call analytics when download starts
+        function downloadAPK() {
+            trackDownload(); // Track the download event
+            
+            const button = document.getElementById('downloadAndroid');
+            button.classList.add('loading');
+            button.innerHTML = '⏳ Preparando descarga...';
+
+            // Simular preparación de descarga
+            setTimeout(() => {
+                // Aquí reemplaza 'app-release.apk' con la ruta real de tu archivo APK
+                const apkUrl = './app-release.apk'; // Cambia esto por tu archivo APK
+                
+                try {
+                    // Crear elemento de descarga temporal
+                    const link = document.createElement('a');
+                    link.href = apkUrl;
+                    link.download = 'AppPetID.apk';
+                    link.style.display = 'none';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+
+                    // Mostrar mensaje de éxito
+                    showDownloadMessage();
+                } catch (error) {
+                    console.error('Error en la descarga:', error);
+                    showErrorMessage();
+                }
+
+                // Restaurar botón
+                button.classList.remove('loading');
+                button.innerHTML = '⬇️ Descargar APK';
+            }, 2000);
+        }
+
+        // Mostrar mensaje de error
+        function showErrorMessage() {
+            const message = document.createElement('div');
+            message.innerHTML = `
+                <div style="
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: #ff4757;
+                    color: white;
+                    padding: 2rem;
+                    border-radius: 20px;
+                    text-align: center;
+                    box-shadow: var(--shadow-hover);
+                    z-index: 10000;
+                    max-width: 400px;
+                    width: 90%;
+                ">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+                    <h3 style="margin-bottom: 1rem;">Error en la descarga</h3>
+                    <p style="margin-bottom: 1.5rem; opacity: 0.9;">
+                        No se pudo descargar el archivo. Por favor, contacta al soporte.
+                    </p>
+                    <button onclick="this.parentElement.parentElement.remove()" style="
+                        background: white;
+                        color: #ff4757;
+                        border: none;
+                        padding: 0.75rem 1.5rem;
+                        border-radius: 25px;
+                        font-weight: 600;
+                        cursor: pointer;
+                    ">Cerrar</button>
+                </div>
+            `;
+            document.body.appendChild(message);
+
+            setTimeout(() => {
+                if (message.parentElement) {
+                    message.remove();
+                }
+            }, 8000);
+        }
+
+        // Preload critical resources
+        window.addEventListener('load', () => {
+            // Precargar el APK para descarga más rápida (opcional)
+            const link = document.createElement('link');
+            link.rel = 'prefetch';
+            link.href = './app-release.apk';
+            document.head.appendChild(link);
+        });
+
+        // PWA-like behavior for better mobile experience
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').catch(err => {
+                console.log('ServiceWorker registration failed: ', err);
+            });
+        }
+
+        // Detect if user is on mobile
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // Show mobile-specific content
+        if (isMobile()) {
+            document.body.classList.add('mobile-device');
+            
+            // Adjust download button text for mobile
+            const androidBtn = document.getElementById('downloadAndroid');
+            if (androidBtn) {
+                androidBtn.innerHTML = '📱 Instalar Ahora';
+            }
+        }
+
+        // Handle visibility change (when user switches tabs)
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                document.title = '🐾 ¡Vuelve! - AppPetID';
+            } else {
+                document.title = 'AppPetID - Red Social Inteligente para Mascotas';
+            }
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            // Escape key closes any open modals
+            if (e.key === 'Escape') {
+                const modals = document.querySelectorAll('[style*="position: fixed"]');
+                modals.forEach(modal => modal.remove());
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add entrance animations with delay
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.1}s`;
+            });
+
+            // Log page load for analytics
+            console.log('AppPetID landing page loaded');
+        });
+    </script>
+</body>
+</html>
